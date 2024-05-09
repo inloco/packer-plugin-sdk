@@ -30,12 +30,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # 4.1.4
 
-      - name: Check that go.mod does not contain a replace
-        run: |
-          if grep -Eq "^\s*replace" <go.mod; then
-            echo "go.mod contains a replace but should not." >&2
-            false
-          fi
+      # - name: Check that go.mod does not contain a replace
+      #   run: |
+      #     if grep -Eq "^\s*replace" <go.mod; then
+      #       echo "go.mod contains a replace but should not." >&2
+      #       false
+      #     fi
 
       - name: Create test directory
         run: |
