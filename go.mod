@@ -120,8 +120,6 @@ require (
 	google.golang.org/protobuf v1.33.0 // indirect
 )
 
-go 1.21
-
-retract v0.5.0 // v0.5.0 of the SDK was broken because of the replace statement for go-cty
+go 1.20
 
 replace github.com/zclconf/go-cty => github.com/nywilken/go-cty v1.13.3 // added by packer-sdc fix as noted in github.com/hashicorp/packer-plugin-sdk/issues/187
