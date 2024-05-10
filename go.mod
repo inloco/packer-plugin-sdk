@@ -65,13 +65,15 @@ require (
 	golang.org/x/net v0.17.0
 	golang.org/x/sync v0.4.0
 	golang.org/x/sys v0.15.0 // indirect
-	golang.org/x/term v0.15.0 // indirect
+	golang.org/x/term v0.15.0
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
 	golang.org/x/tools v0.14.0
 	google.golang.org/api v0.101.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+require github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e
 
 require (
 	cloud.google.com/go/compute v1.12.1 // indirect
