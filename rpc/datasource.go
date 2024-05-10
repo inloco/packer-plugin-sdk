@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package rpc
 
 import (
@@ -152,7 +155,7 @@ func gobDecodeFixNumberPtr(raw interface{}, ty cty.Type) interface{} {
 	switch {
 	case ty.Equals(cty.Number):
 		if bf, ok := raw.(big.Float); ok {
-			return &bf // wrap in pointer
+			return bf // wrap in pointer
 		}
 	case ty.IsMapType():
 		if m, ok := raw.(map[string]interface{}); ok {
