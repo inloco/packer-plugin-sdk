@@ -117,3 +117,5 @@ require (
 )
 
 go 1.21
+
+replace github.com/zclconf/go-cty => github.com/nywilken/go-cty v1.13.3
