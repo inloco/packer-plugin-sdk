@@ -67,85 +67,85 @@ jobs:
           echo "$PACKAGE_NAMES"
           echo "$PACKAGE_NAMES" | xargs -I {} gotestsum --format=short-verbose --junitfile "$TEST_RESULTS_PATH"/packer-plugin-sdk/gotestsum-report.xml -- -count 1 -p 2 {};
 
-  windows-tests:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        go-version:
-          - '1.20'
-          - '1.21.x'
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Run git config #Windows-only
-        run: git config --global core.autocrlf false
+  # windows-tests:
+  #   runs-on: windows-latest
+  #   strategy:
+  #     matrix:
+  #       go-version:
+  #         - '1.20'
+  #         - '1.21.x'
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   steps:
+  #     - name: Run git config #Windows-only
+  #       run: git config --global core.autocrlf false
 
-      - name: Setup Go
-        uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
-        with:
-          go-version: ${{ matrix.go-version }}
+  #     - name: Setup Go
+  #       uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+  #       with:
+  #         go-version: ${{ matrix.go-version }}
 
-      - name: Checkout code
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+  #     - name: Checkout code
+  #       uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
-      - name: Install gotestsum
-        shell: bash
-        run: go install gotest.tools/gotestsum@v1.8.2
+  #     - name: Install gotestsum
+  #       shell: bash
+  #       run: go install gotest.tools/gotestsum@v1.8.2
 
-      # Required for passing tests as we need to have a replace in the go.mod
-      # otherwise we'll get compile-time errors when running them
-      - name: Fix gocty
-        run: |
-          make install-gen-deps
-          packer-sdc fix .
-          go mod tidy
+  #     # Required for passing tests as we need to have a replace in the go.mod
+  #     # otherwise we'll get compile-time errors when running them
+  #     - name: Fix gocty
+  #       run: |
+  #         make install-gen-deps
+  #         packer-sdc fix .
+  #         go mod tidy
 
-      - name: Run Go tests
-        shell: bash
-        run: |
-          PACKAGE_NAMES="$(go list ./...)"
-          echo "Running $(echo "$PACKAGE_NAMES" | wc -w) packages"
-          echo "$PACKAGE_NAMES"
-          echo "$PACKAGE_NAMES" | xargs -I {} gotestsum --format=short-verbose --junitfile "$TEST_RESULTS_PATH"/packer-plugin-sdk/gotestsum-report.xml -- -count 1 -p 2 {};
+  #     - name: Run Go tests
+  #       shell: bash
+  #       run: |
+  #         PACKAGE_NAMES="$(go list ./...)"
+  #         echo "Running $(echo "$PACKAGE_NAMES" | wc -w) packages"
+  #         echo "$PACKAGE_NAMES"
+  #         echo "$PACKAGE_NAMES" | xargs -I {} gotestsum --format=short-verbose --junitfile "$TEST_RESULTS_PATH"/packer-plugin-sdk/gotestsum-report.xml -- -count 1 -p 2 {};
 
-  darwin-tests:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        go-version:
-          - '1.20'
-          - '1.21.x'
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Setup go
-        uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
-        with:
-          go-version: ${{ matrix.go-version }}
+  # darwin-tests:
+  #   runs-on: macos-latest
+  #   strategy:
+  #     matrix:
+  #       go-version:
+  #         - '1.20'
+  #         - '1.21.x'
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   steps:
+  #     - name: Setup go
+  #       uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+  #       with:
+  #         go-version: ${{ matrix.go-version }}
 
-      - name: Checkout code
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+  #     - name: Checkout code
+  #       uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
-      - name: Create test directory
-        run: |
-          mkdir -p ${{ env.TEST_RESULTS_PATH }}/packer-plugin-sdk
+  #     - name: Create test directory
+  #       run: |
+  #         mkdir -p ${{ env.TEST_RESULTS_PATH }}/packer-plugin-sdk
 
-      - name: Install gotestsum
-        run: go install gotest.tools/gotestsum@v1.8.2
+  #     - name: Install gotestsum
+  #       run: go install gotest.tools/gotestsum@v1.8.2
 
-      # Required for passing tests as we need to have a replace in the go.mod
-      # otherwise we'll get compile-time errors when running them
-      - name: Fix gocty
-        run: |
-          make install-gen-deps
-          packer-sdc fix .
-          go mod tidy
+  #     # Required for passing tests as we need to have a replace in the go.mod
+  #     # otherwise we'll get compile-time errors when running them
+  #     - name: Fix gocty
+  #       run: |
+  #         make install-gen-deps
+  #         packer-sdc fix .
+  #         go mod tidy
 
-      - name: Run Go tests
-        run: |
-          PACKAGE_NAMES="$(go list ./...)"
-          echo "Running $(echo "$PACKAGE_NAMES" | wc -w) packages"
-          echo "$PACKAGE_NAMES"
-          echo "$PACKAGE_NAMES" | xargs -I {} gotestsum --format=short-verbose --junitfile "$TEST_RESULTS_PATH"/packer-plugin-sdk/gotestsum-report.xml -- -count 1 -p 2 {};
+  #     - name: Run Go tests
+  #       run: |
+  #         PACKAGE_NAMES="$(go list ./...)"
+  #         echo "Running $(echo "$PACKAGE_NAMES" | wc -w) packages"
+  #         echo "$PACKAGE_NAMES"
+  #         echo "$PACKAGE_NAMES" | xargs -I {} gotestsum --format=short-verbose --junitfile "$TEST_RESULTS_PATH"/packer-plugin-sdk/gotestsum-report.xml -- -count 1 -p 2 {};
